@@ -1,77 +1,87 @@
-import React, { useState } from "react";
-import  { Alert, FlatList, StyleSheet, Text,View ,TouchableWithoutFeedback, Keyboard} from 'react-native';
+import * as React from 'react';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Header from './component/header'
-import TodoItem from "./component/todoItem";
-import AddTodo from "./component/addTodo";
-import SandBox from "./component/sandbox";
-
-export default function App(){
-    const [todos,setTodos] = useState([
-        { text : 'buy cellphone' , id : 1 },
-        { text : 'buy short' , id : 2 },
-        { text : 'buy pants' , id : 3 },
-        { text : 'buy Lsptop' , id : 4 },
-        { text : 'buy Lsptop' , id : 5 },
-    ])
-    const deleteItem = (id) => {
-        setTodos((prevTodo) => {
-            return prevTodo.filter(todo => todo.id != id)
-        })
-    }
-    const handleAddTodo = (text) => {
-        if(text.length > 3){
-            setTodos((prevTodo) => {
-                return [
-                    {text , id : Math.random().toString()},
-                    ...prevTodo
-                ]
-            })
-        }else {
-            Alert.alert('OOPS!','Must be more than 3 char long!',[
-                {text:'UnderStood', onPress : () => console.log('alert closed')}
-            ])
-        }
-        
-    }
-    return (
-    //    <SandBox />
-        <TouchableWithoutFeedback onPress={() => {
-            Keyboard.dismiss()
-        }}>  
-            <View style={styles.container}>
-                {/* header */}
-                <Header/>
-                <View style={styles.content}>
-                    {/* to form */}
-                    <AddTodo handleAddTodo={handleAddTodo}/>
-
-                    <View style={styles.list}>
-                        <FlatList
-                            data={todos}
-                            renderItem={({item}) => (
-                            <TodoItem item={item} deleteItem={deleteItem}/>
-                            )} 
-                        />
-                    </View>
-
-                </View>
-            </View>
-        </TouchableWithoutFeedback>
-    )
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({
-    container : {
-        flex : 1,
-        backgroundColor : '#f2f2f2'
-    },
-    content:{
-        flex : 1,
-        padding : 40
-    },
-    list : {
-        flex : 1,
-        marginTop : 20
-    }
-})
+function DetailsScreen() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+      </View>
+    );
+  }
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
+
+
+// import React, { useState } from "react";
+// import  {  StyleSheet, Text,View} from 'react-native';
+// import Home from "./screen/home";
+// import { AppLoading } from 'expo';
+ 
+// import * as Font from 'expo-font';
+
+// // navigation
+// import { NavigationContainer } from '@react-navigation/native';
+
+// import Navigator from './routes/home'
+
+
+// const getFonts = () => Font.loadAsync({
+//         'oswald-bold' : require('./assets/fonts/Oswald-Bold.ttf'),
+//         'oswald-regular' : require('./assets/fonts/Oswald-Regular.ttf')
+//     });
+
+
+
+// export default function App() {
+
+//     const [fontload,setFontload] = useState(true);
+//     if(fontload){
+//         return (
+//             <Navigator/>
+//         );
+//     }else{
+//         return (
+//             <AppLoading
+//                 startAsync={getFonts}
+//                 onFinish={() => setFontload(true)}
+//             />
+//         );
+//     }
+   
+// }
+// const styles =  StyleSheet.create({
+//     header : {
+//         height : 80,
+//         paddingTop : 38,
+//         backgroundColor : 'skyblue'
+//     },
+//     title : {
+//         textAlign : 'center',
+//         color : '#fff',
+//         fontSize : 20,
+//         fontWeight : 'bold'
+//     }
+// })

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import  {  Button, StyleSheet, Text,TextInput,View} from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function AddTodo({handleAddTodo}){
     const [text,setText] = useState('')
@@ -12,7 +13,7 @@ export default function AddTodo({handleAddTodo}){
     <View>
         <TextInput 
         style={styles.input}
-        placeholder='Enter Todo'
+        placeholder='Enter Todos'
         onChangeText={changeHandler}
         />
         <Button  onPress={ () => handleAddTodo(text)}  title='add todo' color='lightblue' />
